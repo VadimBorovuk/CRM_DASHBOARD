@@ -5,7 +5,6 @@
 //
 // client.setEndpoint('https://cloud.appwrite.io/v1').setProject(APP_WRITE_ID)
 // // const config = useRuntimeConfig()
-//
 // export const account = new Account(client);
 // export {ID} from 'appwrite'
 // export const DB = new Databases(client)
