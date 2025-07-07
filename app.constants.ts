@@ -1,7 +1,0 @@
-export const APP_WRITE_ID = 'crm-system-nuxt-vue3-record-big-prot'
-export const DB_ID = 'crm-base'
-export const COLLECTION_TASKS = 'tasks'
-export const COLLECTION_PERFORMERS = 'performers'
-export const COLLECTION_COMMENTS = 'comments'
-
-export const STORAGE_ID = 'storage'
