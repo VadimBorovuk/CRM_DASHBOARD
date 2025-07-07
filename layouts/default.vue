@@ -13,16 +13,17 @@
 </template>
 
 <script setup lang="ts">
-import {account} from "~/lib/appwrite";
 import {useAuthStore, useLoadingStore} from "~/stores/auth.store";
 
 const isLoadingStore = useLoadingStore()
 const authStore = useAuthStore()
 const router = useRouter()
 
+const { $appwrite } = useNuxtApp()
+
 onMounted(async () => {
   try {
-    const user = await account.get()
+    const user = await $appwrite.account.get()
     if (user) authStore.set(user)
   } catch (e) {
     router.push('/login')

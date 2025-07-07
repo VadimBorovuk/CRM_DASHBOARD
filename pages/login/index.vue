@@ -30,7 +30,7 @@ import {v4 as uuid} from "uuid"
 useHead({
   title: "Login"
 })
-
+const { $appwrite } = useNuxtApp()
 const isLoadingStore = useLoadingStore()
 const authStore = useAuthStore()
 const router = useRouter()
@@ -42,8 +42,8 @@ const passwordRef = ref('')
 const login = async () => {
   try {
     isLoadingStore.set(true)
-    await account.createEmailPasswordSession(emailRef.value, passwordRef.value)
-    const response = await account.get()
+    await $appwrite.account.createEmailPasswordSession(emailRef.value, passwordRef.value)
+    const response = await $appwrite.account.get()
     if (response) {
       authStore.set({
         email: response.email,
@@ -66,7 +66,7 @@ const login = async () => {
 }
 
 const register = async () =>{
-  await account.create(uuid(), emailRef.value, passwordRef.value, nameRef.value)
+  await $appwrite.account.create(uuid(), emailRef.value, passwordRef.value, nameRef.value)
   await login()
 }
 

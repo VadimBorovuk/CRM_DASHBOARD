@@ -1,5 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import tailwindcss from '@tailwindcss/vite'
+import {runtimeEnvConfig} from "./config/runtimeEnv";
 
 export default defineNuxtConfig({
   compatibilityDate: '2025-05-15',
@@ -31,13 +32,13 @@ export default defineNuxtConfig({
      */
     componentDir:
         './components/ui'
-  }
-  ,
+  },
   vite: {
     plugins: [
       tailwindcss(),
     ],
   },
+  runtimeConfig: runtimeEnvConfig,
   pinia: {
     storesDirs: ['./stores/**'],
   },
