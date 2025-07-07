@@ -3,6 +3,13 @@ import tailwindcss from '@tailwindcss/vite'
 import {runtimeEnvConfig} from "./config/runtimeEnv";
 
 export default defineNuxtConfig({
+  ssr: true,
+  nitro: {
+    preset: 'netlify'
+  },
+  app: {
+    baseURL: '/'
+  },
   compatibilityDate: '2025-05-15',
   devtools: {enabled: true},
   css: ['~/assets/css/tailwind.css'],
