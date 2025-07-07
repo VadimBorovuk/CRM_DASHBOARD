@@ -24,7 +24,6 @@
 
 <script setup lang="ts">
 import {useAuthStore, useLoadingStore} from "~/stores/auth.store";
-import {account} from "~/lib/appwrite";
 import {v4 as uuid} from "uuid"
 
 useHead({
