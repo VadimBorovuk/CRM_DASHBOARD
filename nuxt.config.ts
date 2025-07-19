@@ -14,6 +14,7 @@ export default defineNuxtConfig({
   devtools: {enabled: true},
   css: ['~/assets/css/tailwind.css'],
   modules: [
+    '@nuxt/ui',
     '@nuxt/image',
     'shadcn-nuxt',
     ['@nuxtjs/google-fonts', {
@@ -27,7 +28,13 @@ export default defineNuxtConfig({
     ],
     '@nuxt/icon',
     '@pinia/nuxt',
+    '@vee-validate/nuxt',
+    '@nuxtjs/color-mode',
   ],
+  plugins: ['~/plugins/vue-query.ts'],
+  veeValidate: {
+    autoImports: true,
+  },
   shadcn: {
     /**
      * Prefix for all the imported component
@@ -44,6 +51,12 @@ export default defineNuxtConfig({
     plugins: [
       tailwindcss(),
     ],
+  },
+  colorMode: {
+    preference: 'dark',
+    dataValue: 'theme',
+    classSuffix: '',
+    storageKey: 'nuxt-color-mode'
   },
   runtimeConfig: runtimeEnvConfig,
   pinia: {
