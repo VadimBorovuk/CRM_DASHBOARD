@@ -3,11 +3,11 @@
               :overlay="false">
     <template #content>
       <UCard
-          class="overflow-y-auto"
+          class="overflow-y-auto min-h-[350px]"
       >
         <KanbanSlideoverTop/>
       </UCard>
-      <div class="p-6">
+      <div class="p-6 overflow-y-auto">
         <KanbanSlideoverComment/>
       </div>
 

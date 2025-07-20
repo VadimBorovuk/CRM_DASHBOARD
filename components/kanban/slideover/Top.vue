@@ -7,8 +7,9 @@
     </KanbanSlideoverLabel>
 
     <KanbanSlideoverLabel label-text="Status">
-      <UBadge variant="outline"/>
-      {{slideStore.card?.status}}
+      <UBadge color="neutral" variant="outline">
+        {{slideStore.card?.status}}
+      </UBadge>
     </KanbanSlideoverLabel>
 
     <KanbanSlideoverLabel label-text="Performer">
