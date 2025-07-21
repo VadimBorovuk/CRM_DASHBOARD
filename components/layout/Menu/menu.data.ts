@@ -11,18 +11,8 @@ export const MENU_DATA: IMenuItem[]  = [
     icon: 'radix-icons:dashboard'
   },
   {
-    name: 'Products',
-    url: '/products',
+    name: 'Performers',
+    url: '/performers',
     icon: 'radix-icons:video'
-  },
-  {
-    name: 'Payments',
-    url: '/payments',
-    icon: 'radix-icons:padding'
-  },
-  {
-    name: 'Orders',
-    url: '/orders',
-    icon: 'radix-icons:star-filled'
   },
 ]
