@@ -19,6 +19,7 @@ export const useKanbanQuery = () => {
         ...column,
         items: []
       }));
+
       const tasks = data.documents as unknown as ITask[]
 
       for (const task of tasks) {
@@ -33,8 +34,13 @@ export const useKanbanQuery = () => {
             status: task.status,
             performer: task.performer.name
           })
+
+          if (Array.isArray(column.items)) {
+            column.items.sort((a, b) => b.$createdAt.localeCompare(a.$createdAt))
+          }
         }
       }
+
       return newBoard
     },
   })

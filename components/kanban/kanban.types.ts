@@ -16,8 +16,8 @@ export interface IColumn {
 	items: ICard[]
 }
 
-export interface DropResult {
-	removedIndex: number | null
-	addedIndex: number | null
-	payload?: undefined
+
+export interface IPriority {
+	id: number
+	name: string
 }

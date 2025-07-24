@@ -5,25 +5,27 @@
       <UCard
           class="overflow-y-auto min-h-[350px]"
       >
-        <KanbanSlideoverTop/>
+        <KanbanSlideoverTop :refetch="refetch"/>
       </UCard>
-      <div class="p-6 overflow-y-auto">
-        <KanbanSlideoverComment/>
-      </div>
-
+      <KanbanSlideoverComment/>
     </template>
 
   </USlideover>
 </template>
 
 <script setup lang="ts">
+defineProps({
+  refetch: {
+    type: Function
+  }
+})
 import {useTaskSlideStore} from "~/stores/slide-tasks.store";
 
 const slideStore = useTaskSlideStore()
 
 const isLocalOpen = computed({
-  get:() => slideStore.isOpen,
-  set: (value) =>{
+  get: () => slideStore.isOpen,
+  set: (value) => {
     slideStore.isOpen = value
   }
 })

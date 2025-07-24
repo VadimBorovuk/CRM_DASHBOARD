@@ -12,9 +12,7 @@ export const useTaskSlideStore = defineStore('task-slide', {
       this.$patch(defaultValue)
     },
     set(card: ICard) {
-
       this.$patch({card, isOpen: true})
-      console.log(card)
     },
     toggle() {
       this.isOpen = !this.isOpen

@@ -1,7 +1,7 @@
 <template>
   <div class="p-10">
     <h1 class="font-bold text-2xl mb-10">
-      Crm System
+      Dashboard | Crm System
     </h1>
 
     <div v-if="isLoading">
@@ -12,9 +12,13 @@
         <div
             v-for="(column, index) in data"
             :key="index"
-            @dragover="handleDragOver"
-            @drop="()=> handleDrop(column)"
-            class="min-h-screen"
+            @dragover="(e) => handleDragOver(e, column)"
+            @dragleave="(e) => handleDragLeave(e, column)"
+            @drop="() => handleDrop(column)"
+            class="min-h-screen rounded transition-all duration-200"
+            :class="{
+    'outline outline-2 outline-fuchsia-800': dragOverColumnId === column.id
+  }"
         >
           <div class="rounded bg-slate-700 py-1 px-5 mb-2 text-center"
                :style="generalColumnsStyles(index, data?.length)"
@@ -29,6 +33,7 @@
             <SdnCard
                 v-for="card in column.items"
                 class="mb-5 bg-sidebar cursor-pointer"
+                :class="getColorStatus(card.priority)"
                 @click="slideStore.set(card)"
                 @dragstart="()=>handleDragStart(card, column)"
                 draggable="true">
@@ -46,7 +51,7 @@
         </div>
       </div>
 
-      <KanbanSlideover/>
+      <KanbanSlideover :refetch="refetch"/>
     </div>
   </div>
 </template>
@@ -55,8 +60,8 @@
 import type {ICard, IColumn} from "~/components/kanban/kanban.types";
 import {useKanbanQuery} from "~/composables/useKanbanQuery";
 
-useHead({
-  title: "Home | CRM System"
+useSeoMeta({
+  title: "Dashboard | CRM System"
 })
 
 const dragCardRef = ref<ICard | null>(null)
@@ -77,7 +82,21 @@ const config = useRuntimeConfig();
 const {$appwrite} = useNuxtApp()
 const {DB} = $appwrite
 
+const dragOverColumnId = ref<string | null>(null)
 const slideStore = useTaskSlideStore()
+
+const getColorStatus = (priority: number) => {
+  switch (priority){
+    case 1:
+      return 'border-3 border-b-blue-600'
+    case 2:
+      return 'border-3 border-b-yellow-600'
+    case 3:
+      return 'border-3 border-b-red-600'
+    default:
+      return ''
+  }
+}
 
 const {mutate} = useMutation({
   mutationKey: ['move card'],
@@ -89,6 +108,7 @@ const {mutate} = useMutation({
           {status}
       ),
   onSuccess(data, variables, context) {
+    console.log(data)
     refetch()
   },
 })
@@ -98,11 +118,20 @@ function handleDragStart(card: ICard, column: IColumn) {
   sourceColumnRef.value = column
 }
 
-function handleDragOver(event: DragEvent) {
+function handleDragOver(event: DragEvent, column: IColumn) {
   event.preventDefault()
+  dragOverColumnId.value = column.id
+}
+
+function handleDragLeave(event: DragEvent, column: IColumn) {
+  // Якщо миша пішла з цієї колонки — прибираємо підсвічування
+  if (dragOverColumnId.value === column.id) {
+    dragOverColumnId.value = null
+  }
 }
 
 function handleDrop(targetColumn: IColumn) {
+  dragOverColumnId.value = null // прибираємо підсвічування після дропу
   if (dragCardRef.value && sourceColumnRef.value) {
     mutate({
       docId: dragCardRef.value.id,

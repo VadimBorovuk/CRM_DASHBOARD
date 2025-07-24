@@ -8,7 +8,10 @@ export default defineNuxtConfig({
     preset: 'netlify'
   },
   app: {
-    baseURL: '/'
+    head: {
+      link: [{rel: "icon", type: "image/png", href: `/favicon.png`}],
+    },
+    baseURL: `/`
   },
   compatibilityDate: '2025-05-15',
   devtools: {enabled: true},

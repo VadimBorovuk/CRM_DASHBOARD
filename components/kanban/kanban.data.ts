@@ -1,5 +1,5 @@
-import { EnumStatus } from '~/types/tasks.types'
-import type { IColumn } from './kanban.types'
+import {EnumStatus} from '~/types/tasks.types'
+import type {IColumn, IPriority} from './kanban.types'
 
 export const KANBAN_DATA: IColumn[] = [
 	{
@@ -28,3 +28,20 @@ export const KANBAN_DATA: IColumn[] = [
 		items: [],
 	},
 ]
+
+
+export const PRIORITY_DATA: IPriority[] = [
+	{
+		id: 1,
+		name: 'Low'
+	},
+	{
+		id: 2,
+		name: 'Medium'
+	},
+	{
+		id: 3,
+		name: 'High'
+	},
+]
+
