@@ -17,28 +17,14 @@
             class="my-4 w-full"
         />
         <div class="grid w-full max-w-sm items-center gap-1.5 input">
-
-<!--          <label class="cursor-pointer inline-flex items-center justify-center rounded border-3 px-4 py-2 text-white border-bg-sidebar hover:bg-sidebar">-->
-<!--            <span class="mr-2">📁</span>-->
-<!--            <span>Change logo</span>-->
-<!--            <input-->
-<!--                ref="fileInput"-->
-<!--                type="file"-->
-<!--                accept="image/*"-->
-<!--                class="hidden"-->
-<!--                :disabled="isPendingUploadImage"-->
-<!--                @change="onFileChange"-->
-<!--            />-->
-<!--          </label>-->
-
-                    <label>
-                      <SdnInput
-                          type="file"
-                          accept="image/*"
-                          :disabled="isPendingUploadImage"
-                          @change="(e: InputFileEvent) => e?.target?.files?.length && uploadImage(e.target.files[0])"
-                      />
-                    </label>
+          <label>
+            <SdnInput
+                type="file"
+                accept="image/*"
+                :disabled="isPendingUploadImage"
+                @change="(e: InputFileEvent) => e?.target?.files?.length && uploadImage(e.target.files[0])"
+            />
+          </label>
 
         </div>
       </div>
@@ -95,7 +81,7 @@ interface InputFileEvent extends Event {
 }
 
 // const fileInput = ref<HTMLInputElement | null>(null)
-
+const toast = useToast()
 const {handleSubmit, defineField, setFieldValue, setValues, values} = useForm<IPerformerFormState>()
 const {data, isSuccess} = useQuery({
   queryKey: ['get performer', performerId],
@@ -133,6 +119,11 @@ const {mutate, isPending} = useMutation({
 
 const onSubmit = handleSubmit(values => {
   mutate(values)
+  toast.add({
+    title: 'Success',
+    description: 'Performer updated',
+    color: 'success',
+  })
 })
 
 // Upload image
@@ -150,16 +141,13 @@ const {mutate: uploadImage, isPending: isPendingUploadImage} = useMutation({
         config.public.STORAGE_ID, data.$id
     )
     setFieldValue('avatar_url', response)
+    toast.add({
+      title: 'Success',
+      description: 'File loaded',
+      color: 'success',
+    })
   },
 })
-
-const onFileChange = (e: Event) => {
-  const target = e.target as HTMLInputElement
-  if (target?.files?.length) {
-    const file = target.files[0]
-    uploadImage(file)
-  }
-}
 
 useSeoMeta({
   title: "Edit performer | CRM System"

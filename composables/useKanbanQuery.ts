@@ -32,7 +32,7 @@ export const useKanbanQuery = () => {
             description: task.description,
             priority: task.priority,
             status: task.status,
-            performer: task.performer.name
+            performer: task.performer
           })
 
           if (Array.isArray(column.items)) {

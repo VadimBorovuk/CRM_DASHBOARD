@@ -1,4 +1,5 @@
-import type { EnumStatus } from '~/types/tasks.types'
+import type {EnumStatus, IPerformer} from '~/types/tasks.types'
+
 
 export interface ICard {
 	id: string
@@ -6,7 +7,7 @@ export interface ICard {
 	description: string
 	priority: number
 	status: string
-	performer: string
+	performer: IPerformer
 	$createdAt: string
 }
 
