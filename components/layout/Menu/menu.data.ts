@@ -13,6 +13,11 @@ export const MENU_DATA: IMenuItem[]  = [
   {
     name: 'Performers',
     url: '/performers',
-    icon: 'radix-icons:video'
+    icon: 'radix-icons:person'
+  },
+  {
+    name: 'About',
+    url: '/about',
+    icon: 'radix-icons:rocket'
   },
 ]

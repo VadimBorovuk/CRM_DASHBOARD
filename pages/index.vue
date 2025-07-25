@@ -116,7 +116,6 @@ const {mutate} = useMutation({
           {status}
       ),
   onSuccess(data, variables, context) {
-    console.log(data)
     refetch()
   },
 })

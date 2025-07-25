@@ -17,15 +17,12 @@
             class="my-4 w-full"
         />
         <div class="grid w-full max-w-sm items-center gap-1.5 input">
-          <label>
-            <SdnInput
-                type="file"
-                accept="image/*"
-                :disabled="isPendingUploadImage"
-                @change="(e: InputFileEvent) => e?.target?.files?.length && uploadImage(e.target.files[0])"
-            />
-          </label>
-
+          <SdnInput
+              type="file"
+              accept="image/*"
+              :disabled="isPendingUploadImage"
+              @change="(e: InputFileEvent) => e?.target?.files?.length && uploadImage(e.target.files[0])"
+          />
         </div>
       </div>
       <div class="ml-10 flex-3">
@@ -121,7 +118,7 @@ const onSubmit = handleSubmit(values => {
   mutate(values)
   toast.add({
     title: 'Success',
-    description: 'Performer updated',
+    description: 'File loaded',
     color: 'success',
   })
 })

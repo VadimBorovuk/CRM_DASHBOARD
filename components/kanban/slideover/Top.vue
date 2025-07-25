@@ -3,12 +3,37 @@
     <div class="flex items-center justify-between mb-4">
       <p class="uppercase bold text-xl">{{ slideStore.card?.title }}</p>
 
-      <UButton
-          class="cursor-pointer rounded-full"
-          variant="subtle"
-          color="error"
-          @click="deleteTask">Delete
-      </UButton>
+      <UPopover v-model:open="statusDeleteTask">
+        <UButton
+            class="cursor-pointer rounded-full"
+            variant="subtle"
+            color="error"
+            @click="openPopoverDelete">
+          Delete
+        </UButton>
+
+        <template #content>
+          <div class="p-3">
+            <h2>Are you sure?</h2>
+            <div class="flex items-center justify-around mt-3">
+              <UButton
+                  class="cursor-pointer rounded-full"
+                  variant="outline"
+                  color="primary"
+                  @click="statusDeleteTask = !statusDeleteTask">No
+              </UButton>
+              <UButton
+                  class="cursor-pointer rounded-full"
+                  variant="subtle"
+                  color="error"
+                  @click="deleteTask">Yes
+              </UButton>
+            </div>
+
+          </div>
+
+        </template>
+      </UPopover>
     </div>
 
     <KanbanSlideoverLabel label-text="Priority">
@@ -32,11 +57,11 @@
     </KanbanSlideoverLabel>
 
     <KanbanSlideoverLabel label-text="Description">
-     <p> {{ slideStore.card?.description }}</p>
+      <p> {{ slideStore.card?.description }}</p>
     </KanbanSlideoverLabel>
 
     <KanbanSlideoverLabel label-text="Create date">
-     <p> {{ dayjs(slideStore.card?.$createdAt).format('DD MMMM YYYY') }}</p>
+      <p> {{ dayjs(slideStore.card?.$createdAt).format('DD MMMM YYYY') }}</p>
     </KanbanSlideoverLabel>
   </div>
 </template>
@@ -48,6 +73,7 @@ import {useMutation, useQuery} from "@tanstack/vue-query";
 import {useTaskSlideStore} from "~/stores/slide-tasks.store";
 import {useConfigPriority} from "~/composables/useConfigPriority";
 
+const statusDeleteTask = ref(false)
 const toast = useToast()
 const props = defineProps({
   refetch: {
@@ -78,7 +104,12 @@ const {mutate} = useMutation({
   },
 })
 
+const openPopoverDelete = () => {
+  statusDeleteTask.value = true
+}
+
 const deleteTask = () => {
+  statusDeleteTask.value = false
   mutate()
 }
 
