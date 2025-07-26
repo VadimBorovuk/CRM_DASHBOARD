@@ -44,7 +44,7 @@
 
               <SdnCardContent class="flex items-center">
                 <div class="mr-2">
-                  <img class="rounded-full h-[30px] w-[30px] object-cover" :src="card.performer?.avatar_url" alt="logo">
+                  <img class="rounded-full border-2 border-gray-500 h-[35px] w-[35px] object-cover" :src="card.performer?.avatar_url" alt="logo">
                 </div>
                 <p class="text-xs font-bold">{{ card.performer?.name }}</p>
               </SdnCardContent>
