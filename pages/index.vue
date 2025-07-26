@@ -43,8 +43,8 @@
               <USeparator />
 
               <SdnCardContent class="flex items-center">
-                <div class="max-w-[30px] mr-2">
-                  <img class="rounded-full" :src="card.performer?.avatar_url" alt="logo">
+                <div class="mr-2">
+                  <img class="rounded-full h-[30px] w-[30px] object-cover" :src="card.performer?.avatar_url" alt="logo">
                 </div>
                 <p class="text-xs font-bold">{{ card.performer?.name }}</p>
               </SdnCardContent>

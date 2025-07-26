@@ -50,7 +50,7 @@
 
     <KanbanSlideoverLabel label-text="Performer">
       <div class="flex mt-2">
-        <img class="rounded-full mr-3" height="30" width="30" :src="slideStore.card?.performer?.avatar_url" alt="logo">
+        <img class="rounded-full h-[30px] w-[30px] object-cover mr-3" height="30" width="30" :src="slideStore.card?.performer?.avatar_url" alt="logo">
         <span>{{ slideStore.card?.performer?.name }}</span>
       </div>
 
