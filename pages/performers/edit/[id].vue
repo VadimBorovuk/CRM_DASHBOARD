@@ -10,12 +10,17 @@
 
     <form @submit="onSubmit" class="max-w-[800px] flex items-start justify-between">
       <div class="flex-1 max-w-[190px] min-w-[190px]">
-        <div class="text-md mb-2">Logo</div>
-        <img
-            v-if="values.avatar_url || isPendingUploadImage"
-            :src="values.avatar_url" alt=""
-            class="my-4 w-full"
-        />
+        <p class="text-md mb-2">Logo</p>
+        <SdnSkeleton
+            v-if="isLoading"
+            class="w-full h-[170px] mb-3"/>
+        <div v-else>
+          <img
+              v-if="values.avatar_url || isPendingUploadImage"
+              :src="values.avatar_url" alt=""
+              class="my-4 w-full min-h-[170px] max-h-[170px] object-contain"
+          />
+        </div>
         <div class="grid w-full max-w-sm items-center gap-1.5 input">
           <SdnInput
               type="file"
@@ -80,7 +85,7 @@ interface InputFileEvent extends Event {
 // const fileInput = ref<HTMLInputElement | null>(null)
 const toast = useToast()
 const {handleSubmit, defineField, setFieldValue, setValues, values} = useForm<IPerformerFormState>()
-const {data, isSuccess} = useQuery({
+const {data, isLoading} = useQuery({
   queryKey: ['get performer', performerId],
   queryFn: () => $appwrite.DB.getDocument(
       config.public.DB_ID,
@@ -89,16 +94,16 @@ const {data, isSuccess} = useQuery({
   ),
 })
 
-watchEffect(() => {
-  if (isSuccess.value && data.value) {
-    const initialData = data.value as unknown as IPerformerFormState
+watch(data, (val) => {
+  if (val) {
+    const initialData = val as unknown as IPerformerFormState
     setValues({
-      email: initialData.email,
-      avatar_url: initialData.avatar_url,
-      name: initialData.name
+      email: initialData?.email || '',
+      avatar_url: initialData?.avatar_url,
+      name: initialData?.name
     })
   }
-})
+}, {immediate: true})
 
 const [name, nameAttrs] = defineField('name')
 const [email, emailAttrs] = defineField('email')
@@ -118,7 +123,7 @@ const onSubmit = handleSubmit(values => {
   mutate(values)
   toast.add({
     title: 'Success',
-    description: 'File loaded',
+    description: 'Performer updated successfully',
     color: 'success',
   })
 })
@@ -140,7 +145,7 @@ const {mutate: uploadImage, isPending: isPendingUploadImage} = useMutation({
     setFieldValue('avatar_url', response)
     toast.add({
       title: 'Success',
-      description: 'File loaded',
+      description: 'File loaded successfully',
       color: 'success',
     })
   },
