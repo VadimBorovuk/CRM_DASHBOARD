@@ -17,7 +17,7 @@
             @drop="() => handleDrop(column)"
             class="min-h-screen rounded transition-all duration-200"
             :class="{
-    'outline outline-2 outline-fuchsia-800': dragOverColumnId === column.id
+    'outline outline-2 outline-[#450CA9] bg-[#1A0540]': dragOverColumnId === column.id
   }"
         >
           <div class="rounded bg-slate-700 py-1 px-5 mb-2 text-center"
@@ -106,7 +106,7 @@ const getColorStatus = (priority: number) => {
   }
 }
 
-const {mutate} = useMutation({
+const {mutate, isPending} = useMutation({
   mutationKey: ['move card'],
   mutationFn: ({docId, status}: TypeMutationVariables) =>
       DB.updateDocument(

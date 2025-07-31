@@ -21,7 +21,7 @@
     "@tanstack/vue-table": "^8.21.3",
     "@types/uuid": "^10.0.0",
     "@vee-validate/nuxt": "^4.15.1",
-    "@vueuse/core": "^13.5.0",
+    "@vueuse/core": "^13.6.0",
     "appwrite": "^18.1.1",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",

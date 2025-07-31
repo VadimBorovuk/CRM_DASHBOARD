@@ -18,7 +18,7 @@ export interface IColumn {
 }
 
 
-export interface IPriority {
-	id: number
+export interface IConfigSelectOptions {
+	id: number | string
 	name: string
 }

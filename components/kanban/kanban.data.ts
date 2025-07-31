@@ -1,5 +1,5 @@
 import {EnumStatus} from '~/types/tasks.types'
-import type {IColumn, IPriority} from './kanban.types'
+import type {IColumn, IConfigSelectOptions} from './kanban.types'
 
 export const KANBAN_DATA: IColumn[] = [
 	{
@@ -30,7 +30,7 @@ export const KANBAN_DATA: IColumn[] = [
 ]
 
 
-export const PRIORITY_DATA: IPriority[] = [
+export const PRIORITY_DATA: IConfigSelectOptions[] = [
 	{
 		id: 1,
 		name: 'Low'
@@ -44,4 +44,28 @@ export const PRIORITY_DATA: IPriority[] = [
 		name: 'High'
 	},
 ]
+
+export const STATUS_DATA: IConfigSelectOptions[] = [
+	{
+		id: 'todo',
+		name: 'Todo'
+	},
+	{
+		id: 'in-progress',
+		name: 'In progress'
+	},
+	{
+		id: 'ready',
+		name: 'Ready'
+	},
+	{
+		id: 'testing',
+		name: 'Testing'
+	},
+	{
+		id: 'done',
+		name: 'Done'
+	},
+]
+
 
