@@ -89,34 +89,11 @@
   <UModal v-model:open="statusUpdateTask" title="Update task"
   >
     <template #body>
-      <UForm :validate="validateUpdate"
-             :state="{}" class="space-y-4"
-             @submit="onSubmit">
-<!--        <UFormField name="lang" class="mb-3" :label="$t('t.filter.lang')">-->
-<!--          <USelectMenu-->
-<!--              class="w-full"-->
-<!--              searchable-->
-<!--              clear-search-on-close-->
-<!--              size="lg"-->
-<!--              v-model="translateStore.objCreateTranslation.lang"-->
-<!--              :items="languages"-->
-<!--              value-key="code"-->
-<!--              label-key="name"-->
-<!--              :search-input="{-->
-<!--                      placeholder: $t('t.filter.lang'),-->
-<!--                      icon: 'i-lucide-search'-->
-<!--                    }"-->
-<!--              :placeholder="$t('t.filter.lang')"-->
-<!--          />-->
-<!--          &lt;!&ndash;          <div class="flex items-center">&ndash;&gt;-->
-<!--          &lt;!&ndash;            <div class="min-w-[90px] max-w-[90px] break-words mr-2">&ndash;&gt;-->
-<!--          &lt;!&ndash;              {{ $t('t.filter.lang') }}&ndash;&gt;-->
-<!--          &lt;!&ndash;            </div>&ndash;&gt;-->
-<!--          &lt;!&ndash;            &lt;!&ndash;         content&ndash;&gt;&ndash;&gt;-->
-<!--          &lt;!&ndash;          </div>&ndash;&gt;-->
-<!--        </UFormField>-->
+      <UForm
+          :state="{}" class="space-y-4"
+          @submit="onSubmit">
 
-        <UFormField name="code" class="mb-3" label="Title">
+        <UFormField name="title" class="mb-3" label="Title">
           <UInput
               v-model.trim="title"
               size="lg"
@@ -125,76 +102,65 @@
               placeholder="Enter title"/>
         </UFormField>
 
-<!--        <UFormField name="value" class="mb-3" :label="$t('t.filter.value')">-->
-<!--          <UInput-->
-<!--              v-model.trim="translateStore.objCreateTranslation.value"-->
-<!--              size="lg"-->
-<!--              class="w-full"-->
-<!--              :placeholder="$t('t.filter.value')"/>-->
-<!--          -->
-<!--        </UFormField>-->
+        <UFormField name="description" class="mb-3" label="Description">
+          <UTextarea
+              v-model.trim="description"
+              size="lg"
+              v-bind="descriptionAttrs"
+              class="w-full"
+              placeholder="Enter description"/>
+        </UFormField>
 
-        <UButton
-            size="lg"
-            class="bg-waterloo-700 font-bold hover:bg-waterloo-600 dark:bg-waterloo-50 hover:dark:bg-waterloo-200 transition duration-300 ease-in-out cursor-pointer"
-            type="submit">
-          Update
-        </UButton>
+        <UFormField name="priority" class="mb-3" label="Priority">
+          <USelectMenu
+              class="w-full"
+              searchable
+              clear-search-on-close
+              size="lg"
+              v-model="priority"
+              v-bind="priorityAttrs"
+              :items="PRIORITY_DATA"
+              value-key="id"
+              label-key="name"
+              :search-input="{
+                              placeholder: 'Search priority',
+                              icon: 'i-lucide-search'
+                            }"
+              placeholder="Select priority"
+          />
+        </UFormField>
+
+        <UFormField name="status" class="mb-3" label="Status">
+          <USelectMenu
+              class="w-full"
+              searchable
+              clear-search-on-close
+              size="lg"
+              v-model="status"
+              v-bind="statusAttrs"
+              :items="STATUS_DATA"
+              value-key="id"
+              label-key="name"
+              :search-input="{
+                              placeholder: 'Search status',
+                              icon: 'i-lucide-search'
+                            }"
+              placeholder="Select status"
+          />
+        </UFormField>
+
+        <div class="flex justify-end mt-5">
+          <UButton
+              color="neutral"
+              size="xl"
+              class="font-bold transition duration-300 ease-in-out cursor-pointer rounded-3xl"
+              type="submit">
+            Update
+          </UButton>
+        </div>
       </UForm>
     </template>
   </UModal>
-
-
-
-<!--          <form-->
-<!--              @submit="onSubmit"-->
-<!--              class="form mb-5"-->
-<!--          >-->
-<!--            <SdnInput-->
-<!--                v-model="title"-->
-<!--                v-bind="titleAttrs"-->
-<!--                name="title"-->
-<!--                placeholder="Enter title"-->
-<!--                type="text" class="w-full mb-4 rounded-2xl border border-white text-white"-->
-<!--            />-->
-<!--            <SdnTextarea-->
-<!--                v-model="description"-->
-<!--                v-bind="descriptionAttrs"-->
-<!--                name="description"-->
-<!--                placeholder="Enter description"-->
-<!--                class="w-full mb-4 rounded-2xl border border-white text-white"-->
-<!--            />-->
-
-<!--            <Select v-model="priority" v-bind="priorityAttrs">-->
-<!--              <SelectTrigger class="w-full mb-4 rounded-2xl border border-white text-white">-->
-<!--                <SelectValue placeholder="Select a priority"/>-->
-<!--              </SelectTrigger>-->
-<!--              <SelectContent>-->
-<!--                <SelectGroup>-->
-<!--                  <SelectLabel>Priority</SelectLabel>-->
-<!--                  <SelectItem v-for="item in PRIORITY_DATA" :value="item.id" :key="item.id">-->
-<!--                    {{ item.name }}-->
-<!--                  </SelectItem>-->
-<!--                </SelectGroup>-->
-<!--              </SelectContent>-->
-<!--            </Select>-->
-
-<!--            <Select v-model="status" v-bind="statusAttrs">-->
-<!--              <SelectTrigger class="w-full mb-4 rounded-2xl border border-white text-white">-->
-<!--                <SelectValue placeholder="Select a status"/>-->
-<!--              </SelectTrigger>-->
-<!--              <SelectContent>-->
-<!--                <SelectGroup>-->
-<!--                  <SelectLabel>Priority</SelectLabel>-->
-<!--                  <SelectItem v-for="item in STATUS_DATA" :value="item.id" :key="item.id">-->
-<!--                    {{ item.name }}-->
-<!--                  </SelectItem>-->
-<!--                </SelectGroup>-->
-<!--              </SelectContent>-->
-<!--            </Select>-->
-
-
-<!--          </form>-->
 </template>
 
 <script setup lang="ts">
@@ -203,24 +169,7 @@ import {useRuntimeConfig} from "#app";
 import {useMutation, useQuery} from "@tanstack/vue-query";
 import {useTaskSlideStore} from "~/stores/slide-tasks.store";
 import {useConfigPriority} from "~/composables/useConfigPriority";
-
-// import {
-//   Dialog,
-//   DialogContent,
-//   DialogDescription,
-//   DialogHeader,
-//   DialogTitle,
-// } from '@/components/ui/dialog'
 import {PRIORITY_DATA, STATUS_DATA} from "~/components/kanban/kanban.data";
-// import {
-//   Select,
-//   SelectContent,
-//   SelectGroup,
-//   SelectItem,
-//   SelectLabel,
-//   SelectTrigger,
-//   SelectValue
-// } from "~/components/ui/select";
 import {useForm} from "vee-validate";
 import type {ITask} from "~/types/tasks.types";
 
@@ -230,16 +179,6 @@ interface ITaskFormState extends Pick<ITask, 'title' | 'description' | 'priority
     name: string
   }
   status: string
-}
-
-const validateUpdate = (state) => {
-  const errors = []
-
-  if (!state.lang) errors.push({name: 'lang', message: 't.label.error.lang'})
-  if (!state.code) errors.push({name: 'code', message: 't.label.error.code'})
-  if (!state.value) errors.push({name: 'value', message: 't.label.error.value'})
-
-  return errors
 }
 
 const statusDeleteTask = ref(false)
