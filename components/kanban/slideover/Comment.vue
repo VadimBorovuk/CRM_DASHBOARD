@@ -19,7 +19,7 @@
             :key="comment.$id"
             class="flex items-start mt-5"
         >
-          <Icon name="radix-icons:chat-bubble z-10" class="mr-3 mt-1" size="25"/>
+<!--          <Icon name="radix-icons:chat-bubble z-10" class="mr-3 mt-1" size="25"/>-->
           <div>
             <div class="mb-2 text-sm">
               Comment: {{ dayjs(comment.$createdAt).format('DD MMMM HH:mm') }}
