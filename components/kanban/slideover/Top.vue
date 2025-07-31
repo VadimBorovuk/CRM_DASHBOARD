@@ -98,12 +98,14 @@
             <SdnInput
                 v-model="title"
                 v-bind="titleAttrs"
+                name="title"
                 placeholder="Enter title"
                 type="text" class="w-full mb-4 rounded-2xl border border-white text-white"
             />
             <SdnTextarea
                 v-model="description"
                 v-bind="descriptionAttrs"
+                name="description"
                 placeholder="Enter description"
                 class="w-full mb-4 rounded-2xl border border-white text-white"
             />
